@@ -1,2 +1,9 @@
-# training-R-binder
-Repo to build binder for the Intro to R lesson 
+# Intro to R tutorial
+
+This branch holds R studio binder files for the introductory R training workshop in June 2021.
+
+**Do NOT delete/merge branches in this repo!**
+
+Click the 'Launch binder' button (in a **new** tab) to start the binder environment.
+
+- Rstudio environment binder for R lesson. The binder points to the `rstudio-binder` branch.
