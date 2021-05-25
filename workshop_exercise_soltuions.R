@@ -50,10 +50,10 @@ head(library_start)
 ## calculate mean values
 experiment_info_cleaned %>% 
   group_by(`Yeast Strain`) %>% 
-  summarize(mean_ratio = mean(`A260/A280`))
+  summarize(mean_ratio = mean(`260/280`))
 
 # Exercise 6
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Yeast_strain, 
                    y=Total_RNA)) +
   geom_boxplot() +
@@ -63,17 +63,17 @@ ggplot(data=experiment_info,
 ## In the original code, the points are plotted first, then the boxplot. If we reverse the order, the points will be plotted on top of the boxplot.
 
 # Exercise 7
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Yeast_strain, y=Total_RNA)) +
   geom_jitter(alpha=0.6) +
   geom_boxplot() +
-  ggtitle('Boxplot w/ points')
+  ggtitle('Boxplot with points')
 
 ## `geom_jitter()` 'jitters' the points so they are not overlapping as much.
 
 # Exercise 8
 ## basic histogram code
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280))+
   geom_histogram(bins=20) +
   ggtitle('Histogram')
@@ -81,7 +81,7 @@ ggplot(data=experiment_info,
 ## you may need to modify the bin size
 
 ## modify the histogram by plotting by strain type
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280, 
                    fill=Yeast_strain))+
   geom_histogram(bins=20, 
@@ -89,7 +89,7 @@ ggplot(data=experiment_info,
   ggtitle('Histogram by strain')
 
 ## facet the histogram plot by strain
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280, 
                    fill=Yeast_strain))+
   geom_histogram(bins=20, 
@@ -98,7 +98,7 @@ ggplot(data=experiment_info,
   ggtitle('Facet histogram')
 
 ## adding custom color to histogram plot
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280,
                    fill=Yeast_strain))+
   geom_histogram(bins=20, 
@@ -106,12 +106,12 @@ ggplot(data=experiment_info,
   facet_grid(Yeast_strain~.) +
   scale_fill_manual(values = c("cornflowerblue", 
                                "goldenrod2")) + # Add blue and yellow colors that are more colorblind friendly for plotting
-  ggtitle('Histogram w/ custom colors')
+  ggtitle('Histogram with custom colors')
 
 ## color palettes reference: https://www.datanovia.com/en/blog/ggplot-colors-best-tricks-you-will-love/
 
 ## create density plot and change background
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280, 
                    fill=Yeast_strain))+
   geom_density(alpha=0.6) +
