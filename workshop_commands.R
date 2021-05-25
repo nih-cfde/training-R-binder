@@ -49,15 +49,20 @@ a260_vector[c(5:10)]
 # Create a matrix
 
 ## create a matrix by subsetting the data frame by selecting the appropriate columns by column names
-yeast_strain_matrix <- data.matrix(experiment_info[,c("Nucleic Acid Conc.","260/280","Total RNA")])
+yeast_strain_matrix <- data.matrix(experiment_info[,c("Nucleic Acid Conc.",
+                                                      "260/280",
+                                                      "Total RNA")])
 
 ## view the data
 head(yeast_strain_matrix)
 
+## confirm data type
+class(yeast_strain_matrix)
+
 # Data Wrangling with dplyr
 
 ## clean experimental data with select
-experiment_info_cleaned <- select(experiment_info,                                                      Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                     Sample, 
                                   Yeast Strain, 
                                   Nucleic Acid Conc., 
                                   Unit, 
@@ -67,7 +72,7 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   Total RNA)
 ## remember, since R cannot parse spaces in column names, we need to enclose them in back commas to indicate that these words belong together.
 
-experiment_info_cleaned <- select(experiment_info,                                                      Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                     Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
@@ -78,14 +83,15 @@ experiment_info_cleaned <- select(experiment_info,                              
 
 ## as a general rule, it is best to avoid column names that start with a number; we can use back commas for this column name.
 
-experiment_info_cleaned <- select(experiment_info,                                                       Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                     Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
                                   A260, 
                                   A280,
                                   `260/280`,
-                                  `Total RNA`)
+                                  `Total RNA`,
+                                  X9)
 
 ## check the dimensions of the subsetted dataframe
 dim(experiment_info_cleaned)
@@ -96,7 +102,7 @@ dim(experiment_info_cleaned)
 # Instructor to discuss conditional subsetting and filter()
 
 filter(experiment_info_cleaned, `Nucleic Acid Conc.` > 1500)
-filter(experiment_info_cleaned, `A260/A280` >= 2.0 & `Nucleic Acid Conc.` > 1500)
+filter(experiment_info_cleaned, `260/280` >= 2.1 & `Nucleic Acid Conc.` > 1500)
 
 # Exercise 3
 ## Create a new object called wt_high_conc that contains data from WT strains and contain nucleic acid concentration of more than 1500 ng/uL.
@@ -114,8 +120,8 @@ experiment_info_wt <- experiment_info_cleaned %>%
 
 # mutate()
 ## useful for creating new columns
-mutate(experiment_info_cleaned, 
-       concentration_ug_uL = `Nucleic Acid Conc.` / 1000) 
+experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
+                                     conc_ug_uL = `Nucleic Acid Conc.`/1000) 
 
 # Exercise 4
 ## Create a new table called library_start that includes the columns sample, yeast strain and two new columns called RNA_100 with the calculation of microliters to have 100ng of RNA and another column called water that says how many microliters of water we need to add to that to reach 50uL.
@@ -215,7 +221,7 @@ ggplot(data=experiment_info_cleaned,
   ggtitle('Boxplot')
 
 ## boxplot with points
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Yeast_strain,
                    y=Total_RNA)) +
   geom_point(alpha=0.6) +
@@ -233,7 +239,7 @@ ggplot(data=experiment_info,
 
 ## modify axis label text with xlab() and ylab()
 ## split the plots by categorical variable using facet_wrap() or facet_grid()
-ggplot(data=experiment_info, 
+ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Total_RNA, 
                    y=Nucleic_Acid_Conc.,
                    col=Yeast_strain)) +
@@ -248,7 +254,7 @@ ggplot(data=experiment_info,
 
 # Save plots
 ## use ggsave and specify image resolution, dimensions and type
-myplot <- ggplot(data=experiment_info, 
+myplot <- ggplot(data=experiment_info_cleaned, 
                  mapping=aes(x=A260_280, 
                              fill=Yeast_strain))+
   geom_density(alpha=0.6) +
@@ -257,6 +263,11 @@ myplot <- ggplot(data=experiment_info,
                                "goldenrod2")) +
   theme_bw() +
   ggtitle('Density plot')
+
+## view the plot
+myplot
+
+## save the plot
 ggsave(filename='mydensityplot.jpg', 
        plot=myplot, 
        height=4, 
