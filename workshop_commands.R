@@ -1,6 +1,6 @@
 # This script file contains code and comments for follow along for the Intro to R CFDE workshop in June 2021
 
-# Instrutor to discuss the RStudio IDE panes
+# Instructor to discuss the RStudio IDE panes
 
 # Load libraries
 library(dplyr)
