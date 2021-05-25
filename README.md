@@ -1,6 +1,6 @@
 # Intro to R tutorial
 
-This branch holds R studio binder files for the introductory R training workshop in June 2021.
+This repo holds R studio binder files for the introductory R training workshop in June 2021.
 
 **Do NOT delete/merge branches in this repo!**
 
