@@ -16,7 +16,8 @@ dim(experiment_info)
 # examine the first 6 rows across all columns of the data
 head(experiment_info)
 
-# Instructor Switch
+# Instructor Switch !
+
 # Instructor to discuss data types in R
 
 ## what type of data structure is this ?
@@ -63,7 +64,8 @@ class(yeast_strain_matrix)
 # Data Wrangling with dplyr
 
 ## clean experimental data with select
-experiment_info_cleaned <- select(experiment_info,                                                                           Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                           
+                                  Sample, 
                                   Yeast Strain, 
                                   Nucleic Acid Conc., 
                                   Unit, 
@@ -72,9 +74,11 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   260/280,
                                   Total RNA,
                                   X9)
-## remember, since R cannot parse spaces in column names, we need to enclose them in back commas to indicate that these words belong together.
 
-experiment_info_cleaned <- select(experiment_info,                                                                            Sample, 
+## remember, since R cannot parse spaces in column names, we need to enclose them in backticks to indicate that these words belong together.
+
+experiment_info_cleaned <- select(experiment_info,                                                                  
+                                  Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
@@ -84,9 +88,10 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   `Total RNA`,
                                   X9)
 
-## as a general rule, it is best to avoid column names that start with a number; we can use back commas for this column name.
+## as a general rule, it is best to avoid column names that start with a number; we can use backticks for this column name.
 
-experiment_info_cleaned <- select(experiment_info,                                                                            Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                            
+                                  Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
@@ -166,7 +171,8 @@ experiment_info_cleaned %>%
 # Exercise 5 (Bonus)
 ## Calculate the mean value for A260/A280 for each of the yeast strains. Can these sample be used for downstream analysis ?
 
-# Instructor Switch
+# Instructor Switch !
+
 # Plotting with ggplot
 
 ## current column names
@@ -182,6 +188,7 @@ colnames(experiment_info_cleaned) <- c('Sample',
                                        'A260_280',
                                        'Total_RNA',
                                        'ugm')
+
 
 ## ggplot syntax
 ggplot(data=experiment_info_cleaned, 
