@@ -8,4 +8,6 @@ Click the 'Launch binder' button (in a **new** tab) to start the binder environm
 
 - Rstudio environment binder for R lesson. The binder points to the `rstudio-binder` branch.
 
+[![Binder](https://binder.pangeo.io/badge_logo.svg)](https://binder.pangeo.io/v2/gh/nih-cfde/training-R-binder/rstudio-binder?urlpath=rstudio)
+
 
