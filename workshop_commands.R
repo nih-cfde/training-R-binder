@@ -62,7 +62,8 @@ class(yeast_strain_matrix)
 # Data Wrangling with dplyr
 
 ## clean experimental data with select
-experiment_info_cleaned <- select(experiment_info,                                                                           Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                           
+                                  Sample, 
                                   Yeast Strain, 
                                   Nucleic Acid Conc., 
                                   Unit, 
@@ -72,7 +73,8 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   Total RNA)
 ## remember, since R cannot parse spaces in column names, we need to enclose them in back commas to indicate that these words belong together.
 
-experiment_info_cleaned <- select(experiment_info,                                                                            Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                            
+                                  Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
@@ -83,7 +85,8 @@ experiment_info_cleaned <- select(experiment_info,                              
 
 ## as a general rule, it is best to avoid column names that start with a number; we can use back commas for this column name.
 
-experiment_info_cleaned <- select(experiment_info,                                                                            Sample, 
+experiment_info_cleaned <- select(experiment_info,                                                                            
+                                  Sample, 
                                   `Yeast Strain`, 
                                   `Nucleic Acid Conc.`, 
                                   Unit, 
