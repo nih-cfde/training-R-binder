@@ -71,7 +71,7 @@ experiment_info_cleaned <- select(experiment_info,
                                   A280,
                                   260/280,
                                   Total RNA)
-## remember, since R cannot parse spaces in column names, we need to enclose them in back commas to indicate that these words belong together.
+## remember, since R cannot parse spaces in column names, we need to enclose them in backticks to indicate that these words belong together.
 
 experiment_info_cleaned <- select(experiment_info,                                                                            
                                   Sample, 
@@ -83,7 +83,7 @@ experiment_info_cleaned <- select(experiment_info,
                                   260/280,
                                   `Total RNA`)
 
-## as a general rule, it is best to avoid column names that start with a number; we can use back commas for this column name.
+## as a general rule, it is best to avoid column names that start with a number; we can use backticks for this column name.
 
 experiment_info_cleaned <- select(experiment_info,                                                                            
                                   Sample, 
@@ -181,6 +181,8 @@ colnames(experiment_info_cleaned) <- c('Sample',
                                        'A260_280',
                                        'Total_RNA',
                                        'ugm')
+
+## Instructor switch!
 
 ## ggplot syntax
 ggplot(data=experiment_info_cleaned, 
