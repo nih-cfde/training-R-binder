@@ -16,6 +16,7 @@ dim(experiment_info)
 # examine the first 6 rows across all columns of the data
 head(experiment_info)
 
+# Instructor Switch
 # Instructor to discuss data types in R
 
 ## what type of data structure is this ?
@@ -49,9 +50,9 @@ a260_vector[c(5:10)]
 # Create a matrix
 
 ## create a matrix by subsetting the data frame by selecting the appropriate columns by column names
-yeast_strain_matrix <- data.matrix(experiment_info[,c("Nucleic Acid Conc.",
-                                                      "260/280",
-                                                      "Total RNA")])
+yeast_strain_matrix <- data.matrix(experiment_info[,c(`Nucleic Acid Conc.`,
+                                                      `260/280`,
+                                                      `Total RNA`)])
 
 ## view the data
 head(yeast_strain_matrix)
@@ -69,7 +70,8 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   A260, 
                                   A280,
                                   260/280,
-                                  Total RNA)
+                                  Total RNA,
+                                  X9)
 ## remember, since R cannot parse spaces in column names, we need to enclose them in back commas to indicate that these words belong together.
 
 experiment_info_cleaned <- select(experiment_info,                                                                            Sample, 
@@ -79,7 +81,8 @@ experiment_info_cleaned <- select(experiment_info,                              
                                   A260, 
                                   A280,
                                   260/280,
-                                  `Total RNA`)
+                                  `Total RNA`,
+                                  X9)
 
 ## as a general rule, it is best to avoid column names that start with a number; we can use back commas for this column name.
 
@@ -123,7 +126,7 @@ experiment_info_wt <- experiment_info_cleaned %>%
 experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
                                      conc_ug_uL = `Nucleic Acid Conc.`/1000) 
 
-# Exercise 4
+# Exercise 4 (Bonus)
 ## Create a new table called library_start that includes the columns sample, yeast strain and two new columns called RNA_100 with the calculation of microliters to have 100ng of RNA and another column called water that says how many microliters of water we need to add to that to reach 50uL.
 
 # Split-apply-combine
@@ -160,9 +163,10 @@ experiment_info_cleaned %>%
 experiment_info_cleaned %>% 
   count(`Yeast Strain`)
 
-# Exercise 5
+# Exercise 5 (Bonus)
 ## Calculate the mean value for A260/A280 for each of the yeast strains. Can these sample be used for downstream analysis ?
 
+# Instructor Switch
 # Plotting with ggplot
 
 ## current column names
