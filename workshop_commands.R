@@ -51,9 +51,9 @@ a260_vector[c(5:10)]
 # Create a matrix
 
 ## create a matrix by subsetting the data frame by selecting the appropriate columns by column names
-yeast_strain_matrix <- data.matrix(experiment_info[,c(`Nucleic Acid Conc.`,
-                                                      `260/280`,
-                                                      `Total RNA`)])
+yeast_strain_matrix <- data.matrix(experiment_info[,c("Nucleic Acid Conc.",
+                                                      "260/280",
+                                                      "Total RNA")])
 
 ## view the data
 head(yeast_strain_matrix)
