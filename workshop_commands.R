@@ -3,6 +3,7 @@
 # Instructor to discuss the RStudio IDE panes
 
 # Load libraries
+## note loading libraries is important to ensure commands used in the following script work without errors. You may notice error like "could not find function <name of the function>
 library(dplyr)
 library(readr)
 library(ggplot2)
@@ -20,8 +21,11 @@ head(experiment_info)
 
 # Instructor to discuss data types in R
 
-## what type of data structure is this ?
+## what type of data is this ?
 class(experiment_info) 
+
+## what is the structure of the data?
+str(experiment_info) 
 
 # Instructor to discuss data structures in R
 
@@ -62,6 +66,9 @@ head(yeast_strain_matrix)
 class(yeast_strain_matrix)
 
 # Data Wrangling with dplyr
+
+## If you missed the first step, remember to load the dplyr package
+library(dplyr)
 
 ## clean experimental data with select
 experiment_info_cleaned <- select(experiment_info,                                                                           
@@ -174,6 +181,9 @@ experiment_info_cleaned %>%
 # Instructor Switch !
 
 # Plotting with ggplot
+
+## If you missed the first step, remember to load the ggplot2 package
+library(ggplot2)
 
 ## current column names
 colnames(experiment_info_cleaned)
