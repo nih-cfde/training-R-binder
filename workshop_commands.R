@@ -20,60 +20,14 @@ colnames(experiment_info)
 # examine the first 6 rows across all columns of the data
 head(experiment_info)
 
-# Instructor Switch !
-
-# Instructor to discuss data types in R
-
-## what type of data is this ?
-class(experiment_info) 
-
-## what is the structure of the data?
-str(experiment_info) 
-
-# Instructor to discuss data structures in R
-
-# Create a vector 
-a260_vector <- experiment_info$A260
-
-## confirm the data structure
-class(a260_vector)
-
-## get the data type of the vector
-typeof(a260_vector)
-
-# Access elements in a vector
-
-## obtain the fifth element in the vector
-a260_vector[5]
-
-## subset the fifth and tenth element
-a260_vector[c(5,10)]
-
-## subset the fifth through tenth elements
-a260_vector[c(5:10)]
-
-# Exercise 1
-## Generate a vector containing the yeast strain.
-
-# Create a matrix
-
-## create a matrix by subsetting the data frame by selecting the appropriate columns by column names
-yeast_strain_matrix <- data.matrix(experiment_info[,c("Nucleic Acid Conc.",
-                                                      "260/280",
-                                                      "Total RNA")])
-
-## view the data
-head(yeast_strain_matrix)
-
-## confirm data type
-class(yeast_strain_matrix)
+## Toggle to notes!
 
 # Data Wrangling with dplyr
 
 ## If you missed the first step, remember to load the dplyr package
 library(dplyr)
 
-## clean experimental data with select
+## Let’s create a subset of data without those empty columns using the select function.
 experiment_info_cleaned <- select(experiment_info,                                                                           
                                   Sample, 
                                   Yeast Strain, 
@@ -114,16 +68,19 @@ experiment_info_cleaned <- select(experiment_info,
 ## check the dimensions of the subsetted dataframe
 dim(experiment_info_cleaned)
 
-# Exercise 2
-## Select the columns Sample, Yeast Strain, A260 and A280 and assign that to a new object called experiment_data.
+# Exercise 1
+## Select the columns Sample, Yeast Strain, A260 and A280 and assign them to a new object called “experiment_data”.
 
 # Instructor to discuss conditional subsetting and filter()
 
 filter(experiment_info_cleaned, `Nucleic Acid Conc.` > 1500)
 filter(experiment_info_cleaned, `260/280` >= 2.1 & `Nucleic Acid Conc.` > 1500)
 
-# Exercise 3
-## Create a new object called wt_high_conc that contains data from WT strains and contain nucleic acid concentration of more than 1500 ng/uL.
+# mutate()
+## useful for creating new columns
+experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
+                                     conc_ug_uL = `Nucleic Acid Conc.`/1000) 
+
 
 # Pipes
 ## enables applying multiple actions/verbs at once
@@ -136,50 +93,11 @@ experiment_info_wt <- experiment_info_cleaned %>%
                              A260, 
                              A280)
 
-# mutate()
-## useful for creating new columns
-experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
-                                     conc_ug_uL = `Nucleic Acid Conc.`/1000) 
+# Exercise 2 
+## Create a new data table called exp_info_wrangled and only keep the samples that have 260/280 ratio values < 2.15. 
+## Add a new column called total_RNA_in_nano_grams that has total RNA in nano grams. Include the columns sample, 
+## yeast strain and 260/280 and Total_RNA_in_nano_grams
 
-# Exercise 4 (Bonus)
-## Create a new table called library_start that includes the columns sample, yeast strain and two new columns called RNA_100 with the calculation of microliters to have 100ng of RNA and another column called water that says how many microliters of water we need to add to that to reach 50uL.
-
-# Split-apply-combine
-## concept where we split data by groups, analyze and combine the results
-
-## group_by() takes as argument the column name/s that contain categorical variables that can used to group the data 
-## summarize() creates summary statistics
-experiment_info_cleaned %>% 
-  group_by(`Yeast Strain`) %>% 
-  summarize(mean_concentration = mean(`Nucleic Acid Conc.`))
-
-## summarize using more than one column
-experiment_info_cleaned %>% 
-  group_by(`Yeast Strain`) %>% 
-  summarize(mean_concentration = mean(`Nucleic Acid Conc.`),
-            mean_total_RNA = mean(`Total RNA`))
-
-# arrange() to sort results
-## arrange new table in ascending mean concentrations
-experiment_info_cleaned %>% 
-  group_by(`Yeast Strain`) %>% 
-  summarize(mean_concentration = mean(`Nucleic Acid Conc.`),
-            mean_total_RNA = mean(`Total RNA`)) %>% 
-  arrange(mean_concentration) 
-
-## arrange new table in descending mean concentrations 
-experiment_info_cleaned %>% 
-  group_by(`Yeast Strain`) %>% 
-  summarize(mean_concentration = mean(`Nucleic Acid Conc.`),
-            mean_total_RNA = mean(`Total RNA`)) %>% 
-  arrange(desc(mean_concentration)) 
-
-# count() to get the number of categorical values
-experiment_info_cleaned %>% 
-  count(`Yeast Strain`)
-
-# Exercise 5 (Bonus)
-## Calculate the mean value for A260/A280 for each of the yeast strains. Can these sample be used for downstream analysis ?
 
 # Instructor Switch !
 
@@ -252,10 +170,10 @@ ggplot(data=experiment_info_cleaned,
   geom_boxplot() +
   ggtitle('Boxplot with points')
 
-# Exercise 6
+# Exercise 3
 ## What happens if you reverse the order of the `geom_point()` and `geom_boxplot()` functions for the boxplot code above?
 
-# Exercise 7
+# Exercise 4
 ## What happens if you use `geom_jitter()` instead of `geom_point()`?
 ## Reference: https://ggplot2.tidyverse.org/reference/geom_jitter.html
 
@@ -273,7 +191,7 @@ ggplot(data=experiment_info_cleaned,
   ylab('Nucleic Acid Conc. (ng/ul)') +
   ggtitle('Facet scatter plot')
 
-# Exercise 8
+# Exercise 5
 ##  Try making a histogram (`geom_histogram()`) and a density plot (`geom_density()`) of the `A260_280` ratio values.
 
 # Save plots
