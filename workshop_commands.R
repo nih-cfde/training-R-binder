@@ -13,7 +13,10 @@ experiment_info <- read_tsv(file = 'https://osf.io/pzs7g/download/')
 
 ## how big is the data set ?
 dim(experiment_info)
-#
+
+## Check the column names
+colnames(experiment_info)
+
 # examine the first 6 rows across all columns of the data
 head(experiment_info)
 
