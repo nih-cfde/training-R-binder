@@ -1,4 +1,4 @@
-# This script file contains code and comments for follow along for the Intro to R CFDE workshop in June 2021
+# This script file contains code and comments for follow along for the Intro to R CFDE workshop in October 2021
 
 # Instructor to discuss the RStudio IDE panes
 
@@ -9,7 +9,8 @@ library(readr)
 library(ggplot2)
 
 # Read data file
-experiment_info <- read_tsv(file = 'https://osf.io/pzs7g/download/')
+
+experiment_info <- read_tsv(file = '/data/sample_details.tsv')
 
 ## how big is the data set ?
 dim(experiment_info)
@@ -68,28 +69,42 @@ experiment_info_cleaned <- select(experiment_info,
 ## check the dimensions of the subsetted dataframe
 dim(experiment_info_cleaned)
 
+## current column names
+colnames(experiment_info_cleaned)
+
+## new names specified with a vector
+colnames(experiment_info_cleaned) <- c('Sample',
+                                       'Yeast_strain',
+                                       'Nucleic_Acid_Conc.',
+                                       'ng/ul', 
+                                       'A260',
+                                       'A280', 
+                                       'A260_280',
+                                       'Total_RNA',
+                                       'ugm')
+
 # Exercise 1
 ## Select the columns Sample, Yeast Strain, A260 and A280 and assign them to a new object called “experiment_data”.
 
 # Instructor to discuss conditional subsetting and filter()
 
-filter(experiment_info_cleaned, `Nucleic Acid Conc.` > 1500)
-filter(experiment_info_cleaned, `260/280` >= 2.1 & `Nucleic Acid Conc.` > 1500)
+filter(experiment_info_cleaned, Nucleic_Acid_Conc. > 1500)
+filter(experiment_info_cleaned, A260_280 >= 2.1 & Nucleic_Acid_Conc. > 1500)
 
 # mutate()
 ## useful for creating new columns
 experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
-                                     conc_ug_uL = `Nucleic Acid Conc.`/1000) 
+                                     conc_ug_uL = Nucleic_Acid_Conc./1000) 
 
 
 # Pipes
 ## enables applying multiple actions/verbs at once
 
 experiment_info_wt <- experiment_info_cleaned %>% 
-                      filter(`Yeast Strain` == 'WT' & 
-                               `Nucleic Acid Conc.` > 1500) %>% 
+                      filter(Yeast_Strain == 'WT' & 
+                               Nucleic_Acid_Conc. > 1500) %>% 
                       select(Sample,
-                             `Yeast Strain`,
+                             Yeast_Strain,
                              A260, 
                              A280)
 
@@ -105,21 +120,6 @@ experiment_info_wt <- experiment_info_cleaned %>%
 
 ## If you missed the first step, remember to load the ggplot2 package
 library(ggplot2)
-
-## current column names
-colnames(experiment_info_cleaned)
-
-## new names specified with a vector
-colnames(experiment_info_cleaned) <- c('Sample',
-                                       'Yeast_strain',
-                                       'Nucleic_Acid_Conc.',
-                                       'ng/ul', 
-                                       'A260',
-                                       'A280', 
-                                       'A260_280',
-                                       'Total_RNA',
-                                       'ugm')
-
 
 ## ggplot syntax
 ggplot(data=experiment_info_cleaned, 

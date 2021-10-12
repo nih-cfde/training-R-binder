@@ -18,7 +18,7 @@ yeast_strain_vector <- experiment_info[,1]
 ## create new object
 experiment_data <-  select(experiment_info_cleaned, 
                            Sample, 
-                           `Yeast Strain`,
+                           Yeast_strain,
                            A260, 
                            A280)
 ## check the data
@@ -27,8 +27,8 @@ head(experiment_data)
 # Exercise 3
 ## create new object
 wt_high_conc<- filter(experiment_info_cleaned, 
-                      `Yeast Strain` == 'WT' & 
-                        `Nucleic Acid Conc.` > 1500)
+                      Yeast_strain == 'WT' & 
+                        Nucleic_Acid_Conc.> 1500)
 
 ## check the data
 head(wt_high_conc)
@@ -36,10 +36,10 @@ head(wt_high_conc)
 # Exercise 4
 ## create data object
 library_start <- experiment_info %>% 
-  mutate(RNA_100 = 100/ `Nucleic Acid Conc.`,
+  mutate(RNA_100 = 100/ Nucleic_Acid_Conc.,
          water = 50 - RNA_100) %>% 
   select(Sample,
-         `Yeast Strain`,
+         Yeast_strain,
          RNA_100, 
          water) 
 
@@ -49,8 +49,8 @@ head(library_start)
 # Exercise 5
 ## calculate mean values
 experiment_info_cleaned %>% 
-  group_by(`Yeast Strain`) %>% 
-  summarize(mean_ratio = mean(`260/280`))
+  group_by(Yeast_strain) %>% 
+  summarize(mean_ratio = mean(A260_280))
 
 # Exercise 6
 ggplot(data=experiment_info_cleaned, 
