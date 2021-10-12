@@ -1,20 +1,6 @@
 # Solutions to workshop exercises
 
 # Exercise 1
-
-yeast_strain_vector <- experiment_info$Yeast Strain
-
-## the above code with result in error because R cannot parse spaces in column name. We need to add back command around the name of the column.
-
-yeast_strain_vector <- experiment_info$`Yeast Strain`
-
-# Alternatively, you could also use the index of the column:
-
-## dataframe[row number, column number]
-## subset based on column index
-yeast_strain_vector <- experiment_info[,1]
-
-# Exercise 2
 ## create new object
 experiment_data <-  select(experiment_info_cleaned, 
                            Sample, 
@@ -24,35 +10,20 @@ experiment_data <-  select(experiment_info_cleaned,
 ## check the data
 head(experiment_data)
 
-# Exercise 3
-## create new object
-wt_high_conc<- filter(experiment_info_cleaned, 
-                      Yeast_strain == 'WT' & 
-                        Nucleic_Acid_Conc.> 1500)
-
-## check the data
-head(wt_high_conc)
-
-# Exercise 4
-## create data object
-library_start <- experiment_info %>% 
-  mutate(RNA_100 = 100/ Nucleic_Acid_Conc.,
-         water = 50 - RNA_100) %>% 
+# Exercise 2
+# create data object
+exp_info_wrangled<- experiment_info_cleaned %>% 
+  filter(`260/280` < 2.15) %>% 
+  mutate(total_RNA_in_nano_grams = `Total RNA`*1000) %>% 
   select(Sample,
          Yeast_strain,
-         RNA_100, 
-         water) 
+         A260_280, 
+         total_RNA_in_nano_grams) 
 
-## check the data
-head(library_start)
+# check the data
+head(exp_info_wrangled)
 
-# Exercise 5
-## calculate mean values
-experiment_info_cleaned %>% 
-  group_by(Yeast_strain) %>% 
-  summarize(mean_ratio = mean(A260_280))
-
-# Exercise 6
+# Exercise 3
 ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Yeast_strain, 
                    y=Total_RNA)) +
@@ -62,7 +33,7 @@ ggplot(data=experiment_info_cleaned,
 
 ## In the original code, the points are plotted first, then the boxplot. If we reverse the order, the points will be plotted on top of the boxplot.
 
-# Exercise 7
+# Exercise 4
 ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Yeast_strain, y=Total_RNA)) +
   geom_jitter(alpha=0.6) +
@@ -71,7 +42,7 @@ ggplot(data=experiment_info_cleaned,
 
 ## `geom_jitter()` 'jitters' the points so they are not overlapping as much.
 
-# Exercise 8
+# Exercise 5
 ## basic histogram code
 ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=A260_280))+
@@ -120,3 +91,40 @@ ggplot(data=experiment_info_cleaned,
                                "goldenrod2")) +
   theme_bw() +
   ggtitle('Density plot')
+
+# Exercise 6
+yeast_strain_vector <- experiment_info$Yeast_strain
+
+# Alternatively, you could also use the index of the column:
+
+## dataframe[row number, column number]
+## subset based on column index
+yeast_strain_vector <- experiment_info[,1]
+
+# Exercise 7
+## create new object
+wt_high_conc<- filter(experiment_info_cleaned, 
+                      Yeast_strain == 'WT' & 
+                        Nucleic_Acid_Conc.> 1500)
+
+## check the data
+head(wt_high_conc)
+
+# Exercise 8
+# create data object
+library_start <- experiment_info_cleaned %>% 
+  mutate(RNA_100 = 100/ Nucleic_Acid_Conc.,
+         water = 50 - RNA_100) %>% 
+  select(Sample,
+         Yeast_strain,
+         RNA_100,
+         water) 
+
+# check the data
+head(library_start)
+
+# Exercise 9
+## calculate mean values
+experiment_info_cleaned %>% 
+  group_by(Yeast_strain) %>% 
+  summarize(mean_ratio = mean(A260_280))
