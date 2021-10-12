@@ -88,13 +88,16 @@ colnames(experiment_info_cleaned) <- c('Sample',
 
 # Instructor to discuss conditional subsetting and filter()
 
-filter(experiment_info_cleaned, Nucleic_Acid_Conc. > 1500)
-filter(experiment_info_cleaned, A260_280 >= 2.1 & Nucleic_Acid_Conc. > 1500)
+filter(experiment_info_cleaned, 
+       Nucleic_Acid_Conc. > 1500)
+filter(experiment_info_cleaned, 
+       A260_280 >= 2.1 & 
+         Nucleic_Acid_Conc. > 1500)
 
 # mutate()
 ## useful for creating new columns
 experiment_info_wnewcolumn <- mutate(experiment_info_cleaned, 
-                                     conc_ug_uL = Nucleic_Acid_Conc./1000) 
+                                     conc_ug_uL=Nucleic_Acid_Conc./1000) 
 
 
 # Pipes
