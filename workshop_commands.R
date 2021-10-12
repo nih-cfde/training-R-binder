@@ -10,7 +10,7 @@ library(ggplot2)
 
 # Read data file
 
-experiment_info <- read_tsv(file = '/data/sample_details.tsv')
+experiment_info <- read_tsv(file = 'https://osf.io/pzs7g/download/')
 
 ## how big is the data set ?
 dim(experiment_info)
