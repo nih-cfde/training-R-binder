@@ -13,8 +13,8 @@ head(experiment_data)
 # Exercise 2
 # create data object
 exp_info_wrangled<- experiment_info_cleaned %>% 
-  filter(`260/280` < 2.15) %>% 
-  mutate(total_RNA_in_nano_grams = `Total RNA`*1000) %>% 
+  filter(A260_280 < 2.15) %>% 
+  mutate(total_RNA_in_nano_grams = Total_RNA*1000) %>% 
   select(Sample,
          Yeast_strain,
          A260_280, 
