@@ -10,7 +10,8 @@ library(ggplot2)
 
 # Read data file
 
-experiment_info <- read_tsv(file = 'https://osf.io/pzs7g/download/')
+experiment_info <- read.delim(file = '~/sample_details.tsv', 
+                              check.names=FALSE)
 
 ## how big is the data set ?
 dim(experiment_info)
@@ -29,7 +30,7 @@ head(experiment_info)
 library(dplyr)
 
 ## Let’s create a subset of data without those empty columns using the select function.
-experiment_info_cleaned <- select(experiment_info,                                                                           
+experiment_info_cleaned <- select(experiment_info,                                   
                                   Sample, 
                                   Yeast Strain, 
                                   Nucleic Acid Conc., 
@@ -74,7 +75,7 @@ colnames(experiment_info_cleaned)
 
 ## new names specified with a vector
 colnames(experiment_info_cleaned) <- c('Sample',
-                                       'Yeast_strain',
+                                       'Yeast_Strain',
                                        'Nucleic_Acid_Conc.',
                                        'ng/ul', 
                                        'A260',
@@ -90,6 +91,7 @@ colnames(experiment_info_cleaned) <- c('Sample',
 
 filter(experiment_info_cleaned, 
        Nucleic_Acid_Conc. > 1500)
+
 filter(experiment_info_cleaned, 
        A260_280 >= 2.1 & 
          Nucleic_Acid_Conc. > 1500)
@@ -148,7 +150,7 @@ ggplot(data=experiment_info_cleaned,
 ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Total_RNA, 
                    y=Nucleic_Acid_Conc., 
-                   fill=Yeast_strain,
+                   fill=Yeast_Strain,
                    size=A260_280)) +
   geom_point(alpha=0.6, 
              pch=21, 
@@ -156,18 +158,18 @@ ggplot(data=experiment_info_cleaned,
   ggtitle('Scatter: color by strain \n and size by 260/280 ratio')
 
 ## check number of strains
-unique(experiment_info_cleaned$Yeast_strain)
+unique(experiment_info_cleaned$Yeast_Strain)
 
 ## boxplot by strain
 ggplot(data=experiment_info_cleaned, 
-       mapping=aes(x=Yeast_strain, 
+       mapping=aes(x=Yeast_Strain, 
                    y=Total_RNA)) +
   geom_boxplot() +
   ggtitle('Boxplot')
 
 ## boxplot with points
 ggplot(data=experiment_info_cleaned, 
-       mapping=aes(x=Yeast_strain,
+       mapping=aes(x=Yeast_Strain,
                    y=Total_RNA)) +
   geom_point(alpha=0.6) +
   geom_boxplot() +
@@ -187,9 +189,9 @@ ggplot(data=experiment_info_cleaned,
 ggplot(data=experiment_info_cleaned, 
        mapping=aes(x=Total_RNA, 
                    y=Nucleic_Acid_Conc.,
-                   col=Yeast_strain)) +
+                   col=Yeast_Strain)) +
   geom_point() +
-  facet_wrap(~Yeast_strain) +
+  facet_wrap(~Yeast_Strain) +
   xlab('Total RNA (ugm)') +
   ylab('Nucleic Acid Conc. (ng/ul)') +
   ggtitle('Facet scatter plot')
@@ -201,9 +203,9 @@ ggplot(data=experiment_info_cleaned,
 ## use ggsave and specify image resolution, dimensions and type
 myplot <- ggplot(data=experiment_info_cleaned, 
                  mapping=aes(x=A260_280, 
-                             fill=Yeast_strain))+
+                             fill=Yeast_Strain))+
   geom_density(alpha=0.6) +
-  facet_grid(Yeast_strain~.) +
+  facet_grid(Yeast_Strain~.) +
   scale_fill_manual(values = c("cornflowerblue", 
                                "goldenrod2")) +
   theme_bw() +
